@@ -12,7 +12,7 @@ bool GLLogCall(const char* function, const char* file, int line)
     bool res = true;
     while (GLenum error = glGetError())
     {
-        std::cout << "[OpenGL Error] (" << error << "): "
+        std::cerr << "[OpenGL Error] (" << error << "): "
             << function << ' ' << file << ": " << line << std::endl;
         res = false;
     }
@@ -23,13 +23,4 @@ bool GLLogCall(const char* function, const char* file, int line)
 void GLClearScreen()
 {
     GLCall(glClear(GL_COLOR_BUFFER_BIT));
-}
-
-void GLUnbindAll()
-{
-    GLCall(glBindVertexArray(0));
-    GLCall(glDisableVertexAttribArray(0));
-    GLCall(glUseProgram(0));
-    GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
-    GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
 }
