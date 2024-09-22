@@ -28,6 +28,10 @@ void VertexBufferLayout::Bind() const
 
 void VertexBufferLayout::Unbind() const
 {
+	for (unsigned int i = 0; i < m_Elements.size(); ++i)
+	{
+		GLCall(glDisableVertexAttribArray(i));
+	}
 }
 
 void VertexBufferLayout::Push(unsigned int type, unsigned int count)
