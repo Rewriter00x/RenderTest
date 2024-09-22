@@ -65,9 +65,9 @@ int main()
         VertexArray va;
         VertexBuffer vb(positions, 16 * sizeof(float));
         VertexBufferLayout layout({ { GL_FLOAT, 2 }, { GL_FLOAT, 2 } });
-        va.AddBuffer(vb, layout);
-
         IndexBuffer ib(indices, 6);
+        va.AddVertexBuffer(vb, layout);
+        va.AddIndexBuffer(ib);
 
         Shader shader("res/shaders/Basic.shader");
         shader.SetUniform4f("u_Color", .2f, .3f, .8f, 1.f);
@@ -95,7 +95,7 @@ int main()
 
             shader.SetUniform4f("u_Color", r, .3f, .8f, 1.f);
 
-            renderer.Draw(va, ib.GetCount(), shader);
+            renderer.Draw(va, shader);
 
             if (r > 1.f || r < 0.f)
                 increment *= -1;
