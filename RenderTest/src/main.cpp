@@ -10,6 +10,9 @@
 #include "VertexBufferLayout.h"
 #include "IndexBuffer.h"
 #include "Shader.h"
+#include "Texture.h"
+
+#include "vendor/stb_image/stb_image.h"
 
 int main()
 {
@@ -39,14 +42,16 @@ int main()
     if (glewInit() != GLEW_OK)
         std::cerr << "GLEW_NOT_OK" << std::endl;
 
+    stbi_set_flip_vertically_on_load(1);
+
     std::cout << glGetString(GL_VERSION) << std::endl;
 
     {
-        float positions[8] = {
-            -.5f, -.5f,
-             .5f, -.5f,
-             .5f,  .5f,
-            -.5f,  .5f,
+        float positions[16] = {
+            -.5f, -.5f,  0.f,  0.f,
+             .5f, -.5f,  1.f,  0.f,
+             .5f,  .5f,  1.f,  1.f,
+            -.5f,  .5f,  0.f,  1.f,
         };
 
         unsigned int indices[6] = {
@@ -54,15 +59,22 @@ int main()
             2, 3, 0
         };
 
+        GLCall(glEnable(GL_BLEND));
+        GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+
         VertexArray va;
-        VertexBuffer vb(positions, 8 * sizeof(float));
-        VertexBufferLayout layout({ GL_FLOAT, 2 });
+        VertexBuffer vb(positions, 16 * sizeof(float));
+        VertexBufferLayout layout({ { GL_FLOAT, 2 }, { GL_FLOAT, 2 } });
         va.AddBuffer(vb, layout);
 
         IndexBuffer ib(indices, 6);
 
         Shader shader("res/shaders/Basic.shader");
         shader.SetUniform4f("u_Color", .2f, .3f, .8f, 1.f);
+
+        Texture texture("res/textures/apple.png");
+        texture.Bind();
+        shader.SetUniform1i("u_Texture", 0);
 
         va.Unbind();
         shader.Unbind();
@@ -83,7 +95,7 @@ int main()
 
             shader.SetUniform4f("u_Color", r, .3f, .8f, 1.f);
 
-            renderer.Draw(va, shader);
+            renderer.Draw(va, ib.GetCount(), shader);
 
             if (r > 1.f || r < 0.f)
                 increment *= -1;
