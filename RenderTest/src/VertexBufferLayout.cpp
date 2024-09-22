@@ -29,3 +29,9 @@ void VertexBufferLayout::Bind() const
 void VertexBufferLayout::Unbind() const
 {
 }
+
+void VertexBufferLayout::Push(unsigned int type, unsigned int count)
+{
+	m_Elements.emplace_back(type, count, GL_FALSE);
+	m_Stride += count * VertexBufferElement::GetSizeOfType(type);
+}

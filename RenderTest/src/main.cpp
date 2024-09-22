@@ -141,7 +141,7 @@ int main()
         VertexArray va;
         VertexBuffer vb(positions, 8 * sizeof(float));
         VertexBufferLayout layout;
-        layout.Push<GL_FLOAT>(2);
+        layout.Push(GL_FLOAT, 2);
         va.AddBuffer(vb, layout);
 
         IndexBuffer ib(indices, 6);

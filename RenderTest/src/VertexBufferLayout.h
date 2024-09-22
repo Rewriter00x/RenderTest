@@ -24,12 +24,7 @@ public:
 	void Bind() const;
 	void Unbind() const;
 
-	template<unsigned int T>
-	void Push(unsigned int count)
-	{
-		m_Elements.emplace_back( T, count, GL_FALSE );
-		m_Stride += VertexBufferElement::GetSizeOfType(T) * count;
-	}
+	void Push(unsigned int type, unsigned int count);
 
 private:
 	std::vector<VertexBufferElement> m_Elements;
