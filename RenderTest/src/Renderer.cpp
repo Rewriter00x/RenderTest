@@ -23,12 +23,12 @@ bool GLLogCall(const char* function, const char* file, int line)
     return res;
 }
 
-void Renderer::Draw(const VertexArray& va, const Shader& shader) const
+void Renderer::Draw(const VertexArray& va, int count, const Shader& shader) const
 {
     va.Bind();
     shader.Bind();
 
-    GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
+    GLCall(glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, nullptr));
 }
 
 void Renderer::Clear() const
