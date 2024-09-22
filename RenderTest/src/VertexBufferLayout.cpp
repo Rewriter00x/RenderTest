@@ -2,6 +2,11 @@
 
 #include "Renderer.h"
 
+unsigned int VertexBufferElement::GetSize() const
+{
+	return count * GetSizeOfType(type);;
+}
+
 unsigned int VertexBufferElement::GetSizeOfType(unsigned int type)
 {
 	switch (type)
@@ -16,6 +21,24 @@ unsigned int VertexBufferElement::GetSizeOfType(unsigned int type)
 	}
 }
 
+VertexBufferLayout::VertexBufferLayout()
+{
+}
+
+VertexBufferLayout::VertexBufferLayout(const VertexBufferElement& element)
+{
+	Push(element);
+}
+
+VertexBufferLayout::VertexBufferLayout(const std::vector<VertexBufferElement>& elements)
+	: m_Elements(elements)
+{
+	for (const VertexBufferElement& element : m_Elements)
+	{
+		m_Stride += element.GetSize();
+	}
+}
+
 void VertexBufferLayout::Bind() const
 {
 	unsigned int offset = 0;
@@ -24,7 +47,7 @@ void VertexBufferLayout::Bind() const
 		const VertexBufferElement& element = m_Elements[i];
 		GLCall(glEnableVertexAttribArray(i));
 		GLCall(glVertexAttribPointer(i, element.count, element.type, element.normalized, m_Stride, (const void*)offset));
-		offset += element.count * VertexBufferElement::GetSizeOfType(element.type);
+		offset += element.GetSize();
 	}
 }
 
@@ -36,8 +59,16 @@ void VertexBufferLayout::Unbind() const
 	}
 }
 
-void VertexBufferLayout::Push(unsigned int type, unsigned int count)
+void VertexBufferLayout::Push(const VertexBufferElement& element)
 {
-	m_Elements.emplace_back(type, count, GL_FALSE);
-	m_Stride += count * VertexBufferElement::GetSizeOfType(type);
+	m_Elements.emplace_back(element);
+	m_Stride += element.GetSize();
+}
+
+void VertexBufferLayout::Push(const std::vector<VertexBufferElement>& elements)
+{
+	for (const VertexBufferElement& element : m_Elements)
+	{
+		Push(element);
+	}
 }
