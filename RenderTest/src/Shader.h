@@ -27,7 +27,7 @@ private:
 
 	int GetUniformLocation(const std::string& name) const;
 
-	mutable std::unordered_map<std::string, unsigned int> m_UniformLocationCache;
+	mutable std::unordered_map<std::string, int> m_UniformLocationCache;
 	unsigned int m_RendererID;
 	
 #if _DEBUG
