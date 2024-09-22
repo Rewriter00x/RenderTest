@@ -74,18 +74,17 @@ int main()
         float r = 0.f;
         float increment = .05f;
 
+        Renderer renderer;
+
         /* Loop until the user closes the window */
         while (!glfwWindowShouldClose(window))
         {
             /* Render here */
-            GLClearScreen();
+            renderer.Clear();
 
-            shader.Bind();
             shader.SetUniform4f("u_Color", r, .3f, .8f, 1.f);
 
-            va.Bind();
-
-            GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
+            renderer.Draw(va, shader);
 
             if (r > 1.f || r < 0.f)
                 increment *= -1;

@@ -1,5 +1,7 @@
 #include "VertexBufferLayout.h"
 
+#include "Renderer.h"
+
 unsigned int VertexBufferElement::GetSizeOfType(unsigned int type)
 {
 	switch (type)
