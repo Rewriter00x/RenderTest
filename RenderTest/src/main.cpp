@@ -166,7 +166,7 @@ int main()
             GLClearScreen();
 
             GLCall(glUseProgram(shader));
-            GLCall(GLCall(glUniform4f(location, r, .3f, .8f, 1.f)););
+            GLCall(glUniform4f(location, r, .3f, .8f, 1.f));
 
             va.Bind();
 
