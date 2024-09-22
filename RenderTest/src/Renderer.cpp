@@ -20,6 +20,11 @@ bool GLLogCall(const char* function, const char* file, int line)
     return res;
 }
 
+void GLClearScreen()
+{
+    GLCall(glClear(GL_COLOR_BUFFER_BIT));
+}
+
 void GLUnbindAll()
 {
     GLCall(glBindVertexArray(0));
