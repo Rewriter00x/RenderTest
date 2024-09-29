@@ -15,6 +15,7 @@
 #include "stb_image/stb_image.h"
 #include "glm/glm.hpp"
 #include "glm/ext/matrix_clip_space.hpp"
+#include <glm/ext/matrix_transform.hpp>
 
 int main()
 {
@@ -29,7 +30,7 @@ int main()
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
+    window = glfwCreateWindow(960, 540, "Hello World", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
@@ -50,10 +51,10 @@ int main()
 
     {
         float positions[16] = {
-            -.5f, -.5f,  0.f,  0.f,
-             .5f, -.5f,  1.f,  0.f,
-             .5f,  .5f,  1.f,  1.f,
-            -.5f,  .5f,  0.f,  1.f,
+             100.f,  100.f,  0.f,  0.f,
+             200.f,  100.f,  1.f,  0.f,
+             200.f,  200.f,  1.f,  1.f,
+             100.f,  200.f,  0.f,  1.f,
         };
 
         unsigned int indices[6] = {
@@ -69,11 +70,15 @@ int main()
         IndexBuffer ib(indices, 6);
         VertexArray va(vb, layout, ib);
 
-        glm::mat4 proj = glm::ortho(-1.f, 1.f, -.75f, .75f, -1.f, 1.f);
+        glm::mat4 proj = glm::ortho(0.f, 960.f, 0.f, 540.f, -1.f, 1.f); // our space
+        glm::mat4 view = glm::translate(glm::mat4(1.f), glm::vec3(-100.f, 0.f, 0.f)); // our pov
+        glm::mat4 model = glm::translate(glm::mat4(1.f), glm::vec3(200.f, 200.f, 0.f)); // object transform
+
+        glm::mat4 mvp = proj * view * model;
 
         Shader shader("res/shaders/Basic.shader");
         shader.SetUniform4f("u_Color", .2f, .3f, .8f, 1.f);
-        shader.SetUniformMat4f("u_MVP", proj);
+        shader.SetUniformMat4f("u_MVP", mvp);
 
         Texture texture("res/textures/apple.png");
         texture.BindToSlot(0);
