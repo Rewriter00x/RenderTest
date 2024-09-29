@@ -13,7 +13,6 @@ Shader::Shader(const std::string& filepath)
 {
 	ShaderProgramSource source = ParseShader(filepath);
 	m_RendererID = CreateShader(source.VertexSource, source.FragmentSource);
-    GLCall(glUseProgram(m_RendererID));
 }
 
 Shader::~Shader()

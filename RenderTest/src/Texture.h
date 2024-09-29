@@ -2,7 +2,9 @@
 
 #include <string>
 
-class Texture
+#include "RenderObjectBase.h"
+
+class Texture : public RenderObjectBase
 {
 public:
 	Texture(const std::string& filepath);
@@ -11,8 +13,9 @@ public:
 	inline int GetWidth() const { return m_Width; }
 	inline int GetHeight() const { return m_Height; }
 
-	void Bind(unsigned int slot = 0) const;
-	void Unbind() const;
+	void BindToSlot(unsigned int slot) const;
+	virtual void Bind() const override;
+	virtual void Unbind() const override;
 
 private:
 	unsigned int m_RendererID;

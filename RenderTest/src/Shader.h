@@ -3,16 +3,18 @@
 #include <string>
 #include <unordered_map>
 
+#include "RenderObjectBase.h"
+
 #include "glm/glm.hpp"
 
-class Shader
+class Shader : public RenderObjectBase
 {
 public:
 	Shader(const std::string& filepath);
 	~Shader();
 
-	void Bind() const;
-	void Unbind() const;
+	virtual void Bind() const override;
+	virtual void Unbind() const override;
 
 	void SetUniform1i(const std::string& name, int value) const;
 	void SetUniform4f(const std::string& name, float v0, float v1, float v2, float v3) const;
@@ -32,7 +34,6 @@ private:
 	int GetUniformLocation(const std::string& name) const;
 
 	mutable std::unordered_map<std::string, int> m_UniformLocationCache;
-	unsigned int m_RendererID;
 	
 #if _DEBUG
 	std::string m_Filepath;

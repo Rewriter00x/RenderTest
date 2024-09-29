@@ -64,12 +64,10 @@ int main()
         GLCall(glEnable(GL_BLEND));
         GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 
-        VertexArray va;
         VertexBuffer vb(positions, 16 * sizeof(float));
         VertexBufferLayout layout({ { GL_FLOAT, 2 }, { GL_FLOAT, 2 } });
         IndexBuffer ib(indices, 6);
-        va.AddVertexBuffer(vb, layout);
-        va.AddIndexBuffer(ib);
+        VertexArray va(vb, layout, ib);
 
         glm::mat4 proj = glm::ortho(-1.f, 1.f, -.75f, .75f, -1.f, 1.f);
 
@@ -78,7 +76,7 @@ int main()
         shader.SetUniformMat4f("u_MVP", proj);
 
         Texture texture("res/textures/apple.png");
-        texture.Bind();
+        texture.BindToSlot(0);
         shader.SetUniform1i("u_Texture", 0);
 
         va.Unbind();

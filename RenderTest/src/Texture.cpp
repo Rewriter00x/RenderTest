@@ -31,10 +31,15 @@ Texture::~Texture()
 	GLCall(glDeleteTextures(1, &m_RendererID));
 }
 
-void Texture::Bind(unsigned int slot) const
+void Texture::BindToSlot(unsigned int slot) const
 {
 	GLCall(glActiveTexture(GL_TEXTURE0 + slot));
 	GLCall(glBindTexture(GL_TEXTURE_2D, m_RendererID));
+}
+
+void Texture::Bind() const
+{
+	BindToSlot(0);
 }
 
 void Texture::Unbind() const

@@ -1,6 +1,8 @@
 #pragma once
 
-class IndexBuffer
+#include "RenderObjectBase.h"
+
+class IndexBuffer : public RenderObjectBase
 {
 public:
 	IndexBuffer(const unsigned int* data, unsigned int count);
@@ -8,11 +10,10 @@ public:
 
 	inline unsigned int GetCount() const { return m_Count; }
 
-	void Bind() const;
-	void Unbind() const;
+	virtual void Bind() const override;
+	virtual void Unbind() const override;
 
 private:
-	unsigned int m_RendererID;
 	unsigned int m_Count;
 
 };

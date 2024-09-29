@@ -8,7 +8,18 @@
 VertexArray::VertexArray()
 {
 	GLCall(glGenVertexArrays(1, &m_RendererID));
-	GLCall(glBindVertexArray(m_RendererID));
+}
+
+VertexArray::VertexArray(const VertexBuffer& vb, const VertexBufferLayout& layout)
+	: VertexArray()
+{
+	AddVertexBuffer(vb, layout);
+}
+
+VertexArray::VertexArray(const VertexBuffer& vb, const VertexBufferLayout& layout, const IndexBuffer& ib)
+	: VertexArray(vb, layout)
+{
+	AddIndexBuffer(ib);
 }
 
 VertexArray::~VertexArray()
@@ -36,5 +47,6 @@ void VertexArray::AddVertexBuffer(const VertexBuffer& vb, const VertexBufferLayo
 void VertexArray::AddIndexBuffer(const IndexBuffer& ib)
 {
 	Bind();
+	ib.Bind();
 	m_IndexCount = ib.GetCount();
 }
