@@ -9,6 +9,8 @@
 #include "imgui/imgui_impl_glfw.h"
 #include "imgui/imgui_impl_opengl3.h"
 
+#include "tests/Test.h"
+#include "tests/TestClearColor.h"
 #include "tests/TestTwoObjectsUniform.h"
 
 int main()
@@ -54,7 +56,12 @@ int main()
         ImGui_ImplGlfw_InitForOpenGL(window, true);
         ImGui_ImplOpenGL3_Init("#version 130");
 
-        test::TestTwoObjectsUniform test;
+        test::Test* currentTest = nullptr;
+        test::TestMenu* testMenu = new test::TestMenu(currentTest);
+        currentTest = testMenu;
+
+        testMenu->RegisterTest<test::TestClearColor>("Clear Color");
+        testMenu->RegisterTest<test::TestTwoObjectsUniform>("Two Objects (uniforms)");
 
         /* Loop until the user closes the window */
         while (!glfwWindowShouldClose(window))
@@ -63,9 +70,23 @@ int main()
             ImGui_ImplGlfw_NewFrame();
             ImGui::NewFrame();
 
-            test.OnUpdate(0.f);
-            test.OnRender();
-            test.OnImGuiRender();
+            if (currentTest)
+            {
+                currentTest->OnUpdate(0.f);
+                currentTest->OnRender();
+
+                ImGui::Begin("Test");
+
+                if (currentTest != testMenu && ImGui::Button("<-"))
+                {
+                    delete currentTest;
+                    currentTest = testMenu;
+                }
+
+                currentTest->OnImGuiRender();
+
+                ImGui::End();
+            }
 
             ImGui::Render();
             ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -76,6 +97,12 @@ int main()
             /* Poll for and process events */
             glfwPollEvents();
         }
+
+        if (currentTest != testMenu)
+        {
+            delete testMenu;
+        }
+        delete currentTest;
     }
 
     ImGui_ImplOpenGL3_Shutdown();

@@ -5,18 +5,6 @@
 
 namespace test {
 
-	TestClearColor::TestClearColor()
-	{
-	}
-
-	TestClearColor::~TestClearColor()
-	{
-	}
-
-	void TestClearColor::OnUpdate(float deltaTime)
-	{
-	}
-
 	void TestClearColor::OnRender()
 	{
 		renderer.Clear();

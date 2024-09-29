@@ -24,14 +24,6 @@ namespace test {
 		ib.Unbind();
 	}
 
-	TestTwoObjectsUniform::~TestTwoObjectsUniform()
-	{
-	}
-
-	void TestTwoObjectsUniform::OnUpdate(float deltaTime)
-	{
-	}
-
 	void TestTwoObjectsUniform::OnRender()
 	{
 		renderer.Clear();

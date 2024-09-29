@@ -34,4 +34,5 @@ void Renderer::Draw(const VertexArray& va, const Shader& shader) const
 void Renderer::Clear() const
 {
     GLCall(glClear(GL_COLOR_BUFFER_BIT));
+    GLCall(glClearColor(0.f, 0.f, 0.f, 1.f));
 }

@@ -3,6 +3,11 @@
 #include "Renderer.h"
 #include "imgui/imgui.h"
 
+#include <string>
+#include <vector>
+#include <functional>
+#include <iostream>
+
 namespace test {
 
 	class Test
@@ -19,6 +24,27 @@ namespace test {
 		Renderer renderer;
 		ImGuiIO& io = ImGui::GetIO();
 		
+	};
+
+	class TestMenu : public Test
+	{
+	public:
+		TestMenu(Test*& currentTest);
+
+		virtual void OnImGuiRender() override;
+
+		template<typename T, typename std::enable_if<std::is_base_of<Test, T>::value>::type* = nullptr>
+		void RegisterTest(const std::string& name)
+		{
+			std::cout << "Registering test " << name << std::endl;
+
+			m_Tests.emplace_back(name, [] { return new T(); });
+		}
+
+	private:
+		Test*& m_CurrentTest;
+		std::vector<std::pair<std::string, std::function<Test*()>>> m_Tests;
+
 	};
 
 }
