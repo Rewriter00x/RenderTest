@@ -166,10 +166,12 @@
     <ClCompile Include="src\tests\TestClearColor.cpp" />
     <ClCompile Include="src\tests\TestTwoObjectsUniform.cpp" />
     <ClCompile Include="src\tests\TestBatchRendering.cpp" />
+    <ClCompile Include="src\tests\TestBatchObjects.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\Basic.shader" />
     <None Include="res\shaders\Batch.shader" />
+    <None Include="res\shaders\BatchTex.shader" />
     <None Include="src\vendor\glm\detail\func_common.inl" />
     <None Include="src\vendor\glm\detail\func_common_simd.inl" />
     <None Include="src\vendor\glm\detail\func_exponential.inl" />
@@ -620,9 +622,11 @@
     <ClInclude Include="src\tests\TestClearColor.h" />
     <ClInclude Include="src\tests\TestTwoObjectsUniform.h" />
     <ClInclude Include="src\tests\TestBatchRendering.h" />
+    <ClInclude Include="src\tests\TestBatchObjects.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\textures\apple.png" />
+    <Image Include="res\textures\banana.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
