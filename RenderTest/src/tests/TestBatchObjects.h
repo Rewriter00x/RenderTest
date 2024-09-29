@@ -2,7 +2,7 @@
 
 #include "Test.h"
 
-#include <array>
+#include <vector>
 
 class VertexBuffer;
 class IndexBuffer;
@@ -16,11 +16,12 @@ namespace test {
 	{
 	public:
 		TestBatchObjects();
+		~TestBatchObjects();
 
 		virtual void OnRender() override;
 
 	private:
-		std::array<std::unique_ptr<Texture>, 2> m_Textures;
+		std::vector<Texture*> m_Textures;
 
 		std::unique_ptr<VertexBuffer> m_VertexBuffer;
 		std::unique_ptr<IndexBuffer> m_IndexBuffer;

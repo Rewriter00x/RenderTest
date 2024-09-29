@@ -49,8 +49,16 @@ namespace test {
 		int samplers[] = { 0, 1 };
 		m_Shader->SetUniform1iv("u_Textures", samplers);
 		
-		m_Textures[0] = std::make_unique<Texture>("res/textures/apple.png");
-		m_Textures[1] = std::make_unique<Texture>("res/textures/banana.png");
+		m_Textures.push_back(new Texture("res/textures/apple.png"));
+		m_Textures.push_back(new Texture("res/textures/banana.png"));
+	}
+
+	TestBatchObjects::~TestBatchObjects()
+	{
+		for (Texture* texture : m_Textures)
+		{
+			delete texture;
+		}
 	}
 
 	void TestBatchObjects::OnRender()
