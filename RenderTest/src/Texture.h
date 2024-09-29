@@ -18,7 +18,6 @@ public:
 	virtual void Unbind() const override;
 
 private:
-	unsigned int m_RendererID;
 	int m_Width, m_Height, m_BPP;
 
 #if _DEBUG
