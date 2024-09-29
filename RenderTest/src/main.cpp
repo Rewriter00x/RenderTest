@@ -12,7 +12,9 @@
 #include "Shader.h"
 #include "Texture.h"
 
-#include "vendor/stb_image/stb_image.h"
+#include "stb_image/stb_image.h"
+#include "glm/glm.hpp"
+#include "glm/ext/matrix_clip_space.hpp"
 
 int main()
 {
@@ -69,8 +71,11 @@ int main()
         va.AddVertexBuffer(vb, layout);
         va.AddIndexBuffer(ib);
 
+        glm::mat4 proj = glm::ortho(-1.f, 1.f, -.75f, .75f, -1.f, 1.f);
+
         Shader shader("res/shaders/Basic.shader");
         shader.SetUniform4f("u_Color", .2f, .3f, .8f, 1.f);
+        shader.SetUniformMat4f("u_MVP", proj);
 
         Texture texture("res/textures/apple.png");
         texture.Bind();
