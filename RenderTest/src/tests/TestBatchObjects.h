@@ -19,6 +19,7 @@ namespace test {
 		~TestBatchObjects();
 
 		virtual void OnRender() override;
+		virtual void OnImGuiRender() override;
 
 	private:
 		std::vector<Texture*> m_Textures;
@@ -27,6 +28,9 @@ namespace test {
 		std::unique_ptr<IndexBuffer> m_IndexBuffer;
 		std::unique_ptr<VertexArray> m_VertexArray;
 		std::unique_ptr<Shader> m_Shader;
+
+		float pos1[2];
+		float pos2[2];
 
 	};
 
