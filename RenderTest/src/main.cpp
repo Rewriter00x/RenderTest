@@ -12,6 +12,7 @@
 #include "tests/Test.h"
 #include "tests/TestClearColor.h"
 #include "tests/TestTwoObjectsUniform.h"
+#include "tests/TestBatchRendering.h"
 
 int main()
 {
@@ -62,6 +63,7 @@ int main()
 
         testMenu->RegisterTest<test::TestClearColor>("Clear Color");
         testMenu->RegisterTest<test::TestTwoObjectsUniform>("Two Objects (uniforms)");
+        testMenu->RegisterTest<test::TestBatchRendering>("Two Objects (batch)");
 
         /* Loop until the user closes the window */
         while (!glfwWindowShouldClose(window))
